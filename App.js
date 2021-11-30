@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState , useEffect } from 'react';
-import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
+import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native';
 import Botao from './Botao';
 
 export default function App() {
@@ -17,6 +17,10 @@ export default function App() {
       numeros.push(i);
     }
 
+    function logicaCalculadora(){
+      alert(`teste`);
+    }
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -24,17 +28,17 @@ export default function App() {
         <Text style={{fontSize:30}}>{stringCalculo}</Text>
       </View>
 
-      <View style={{flex:1, flexDirection:'row'}}>
-        <TouchableHighlight style={styles.sinaisBotao}><Text style={styles.sinais}>+</Text></TouchableHighlight>
-        <TouchableHighlight style={styles.sinaisBotao}><Text style={styles.sinais}>-</Text></TouchableHighlight>
-        <TouchableHighlight style={styles.sinaisBotao}><Text style={styles.sinais}>/</Text></TouchableHighlight>
-        <TouchableHighlight style={styles.sinaisBotao}><Text style={styles.sinais}>*</Text></TouchableHighlight>
+      <View style={{flexDirection:'row', height:'16.6%'}}>
+        <TouchableOpacity style={styles.sinaisBotao}><Text style={styles.sinais}>+</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.sinaisBotao}><Text style={styles.sinais}>-</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.sinaisBotao}><Text style={styles.sinais}>/</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.sinaisBotao}><Text style={styles.sinais}>*</Text></TouchableOpacity>
       </View>
 
-      <View>
+      <View style={{flexDirection:'row', flexWrap:'wrap', height:'66.8%'}}>
           {
               numeros.map(function(e){
-                return (<Botao numero={e}></Botao>);
+                return (<Botao logicaCalculadora={logicaCalculadora} numero={e}></Botao>);
               })
           }
       </View>
@@ -46,11 +50,14 @@ const styles = StyleSheet.create({
   container: {
     paddingTop:40,
     flex:1,
+    backgroundColor:'#4f4f4f',
   },
   topo: {
-    padding: 10,
-    borderBottomColor: 'black',
-    borderBottomWidth:2
+    padding: 15,
+    margin:10,
+    backgroundColor:'white',
+    borderRadius:20, height: '16.6%',
+    justifyContent: 'center'
   },
   sinais: {
     fontSize:30,
@@ -58,10 +65,11 @@ const styles = StyleSheet.create({
     
   },
   sinaisBotao: {
-    width:'25%',
-    height:'8%',
-    borderColor:'black',
-    borderRadius:5,
-    borderWidth:1,
+    width:'20%',
+    margin:10,
+    borderRadius:10,
+    backgroundColor:'orange',
+    justifyContent:'center',
+    alignItems:'center'
   },
 });
