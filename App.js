@@ -17,8 +17,40 @@ export default function App() {
       numeros.push(i);
     }
 
-    function logicaCalculadora(){
-      alert(`teste`);
+    function logicaCalculadora(n){
+      if(sinal == ""){
+        setFirstNumber(parseInt(firstNumber.toString() + n.toString()));
+        setStringCalculo(parseInt(firstNumber.toString() + n.toString()));
+      }
+
+      if((n == "/" || n == "*" || n== "+" || n == "-") && secondNumber == 0){
+            setStringCalculo(firstNumber.toString() + n);
+            setSinal(n);
+      }
+
+      if(sinal != ""){
+          setSecondNumber(parseInt(secondNumber.toString() + n.toString()));
+          setStringCalculo(firstNumber+sinal+parseInt(secondNumber.toString() + n.toString()));
+      }
+
+      if(n == "="){
+          let resultado = 0;
+          if(sinal == "+"){
+              resultado = firstNumber+secondNumber;
+
+          }else if (sinal == "-"){
+              resultado = firstNumber-secondNumber;
+
+          }else if (sinal == "/"){
+              resultado = firstNumber/secondNumber;
+          }else if (sinal == "*"){
+              resultado = firstNumber*secondNumber;
+          }
+          setStringCalculo(resultado);
+          setSinal("");
+          setFirstNumber(resultado);
+          setSecondNumber(0);
+      }
     }
 
   return (
@@ -28,14 +60,15 @@ export default function App() {
         <Text style={{fontSize:30}}>{stringCalculo}</Text>
       </View>
 
-      <View style={{flexDirection:'row', height:'16.6%'}}>
-        <TouchableOpacity style={styles.sinaisBotao}><Text style={styles.sinais}>+</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.sinaisBotao}><Text style={styles.sinais}>-</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.sinaisBotao}><Text style={styles.sinais}>/</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.sinaisBotao}><Text style={styles.sinais}>*</Text></TouchableOpacity>
+      <View style={{flexDirection:'row', height:'10%'}}>
+        <TouchableOpacity onPress={() =>logicaCalculadora('+')} style={styles.sinaisBotao}><Text style={styles.sinais}>+</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() =>logicaCalculadora('-')} style={styles.sinaisBotao}><Text style={styles.sinais}>-</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() =>logicaCalculadora('/')} style={styles.sinaisBotao}><Text style={styles.sinais}>/</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() =>logicaCalculadora('*')} style={styles.sinaisBotao}><Text style={styles.sinais}>*</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() =>logicaCalculadora('=')} style={styles.sinaisBotao}><Text style={styles.sinais}>=</Text></TouchableOpacity>
       </View>
 
-      <View style={{flexDirection:'row', flexWrap:'wrap', height:'66.8%'}}>
+      <View style={{flexDirection:'row', flexWrap:'wrap', height:'75%'}}>
           {
               numeros.map(function(e){
                 return (<Botao logicaCalculadora={logicaCalculadora} numero={e}></Botao>);
@@ -56,7 +89,7 @@ const styles = StyleSheet.create({
     padding: 15,
     margin:10,
     backgroundColor:'white',
-    borderRadius:20, height: '16.6%',
+    borderRadius:20, height: '15%',
     justifyContent: 'center'
   },
   sinais: {
@@ -65,7 +98,7 @@ const styles = StyleSheet.create({
     
   },
   sinaisBotao: {
-    width:'20%',
+    width:'15%',
     margin:10,
     borderRadius:10,
     backgroundColor:'orange',
